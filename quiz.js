@@ -38,6 +38,11 @@ const preguntas = [
     }
 ];
 
+let cantidadPreguntas = preguntas.length 
+
+const indexPreguntas = preguntas.map((e,i)=>i)
+
+
 
 const posible1 = document.getElementById("opcion-1")
 const posible2 = document.getElementById("opcion-2")
@@ -47,6 +52,8 @@ const posiblesArray = [posible1,posible2,posible3,posible4]
 
 function setQuiz(idNumber) {
     const lugarPregunta = document.getElementById("pregunta")
+    
+
 
     lugarPregunta.innerHTML = preguntas[idNumber].pregunta
 
@@ -72,18 +79,42 @@ function setQuiz(idNumber) {
 
 
 
+const setQuizer = Math.floor(Math.random() * cantidadPreguntas );
 
-setQuiz(1)
-
+// Obtenemos el índice real de la pregunta
+setQuiz(indexPreguntas[setQuizer]); // Mostramos la pregunta
+console.log(indexPreguntas[setQuizer]);
+// Eliminamos la pregunta del array indexPreguntas
+console.log("indicies antes",indexPreguntas);
+indexPreguntas.splice(setQuizer,1)
+console.log("indicies despues",indexPreguntas);
+cantidadPreguntas--
+console.log("setQuizer",setQuizer);
 
 function responder(respuesta) {
     console.log("holaaaa");
     respuesta.classList += " incorrect-quiz "
     if (respuesta.classList.contains("correct")) {
         respuesta.classList = "correct-quiz"
-        const numeroAleatorio = Math.floor(Math.random() * 3);
-        setTimeout(() => {setQuiz(numeroAleatorio)}, 1000);
-        console.log("boton correcto");
+
+        console.log("cantidad",cantidadPreguntas);
+
+        let numeroAleatorio = Math.floor(Math.random() * cantidadPreguntas );
+
+
+        console.log("numeroAle",numeroAleatorio);
+        const cososta = indexPreguntas[numeroAleatorio]
+        console.log(indexPreguntas,cososta );
+        
+        setTimeout(() => {setQuiz(cososta)}, 1000);
+
+        cantidadPreguntas--
+
+        console.log("indicies antes",indexPreguntas);
+
+        indexPreguntas.splice(numeroAleatorio,1)
+
+        console.log("indicies despues",indexPreguntas);
     }
     console.log("boton");
     
