@@ -5,37 +5,82 @@ preguntaasasa.innerHTML= "Quien es este Pokemon"
 const preguntas = [
     {
         id: 1,
-        pregunta: "¿Cuál es la capital de Francia?",
+        pregunta: "¿Cuál es el Pokémon inicial de tipo fuego en la región de Kanto?",
         respuestas: {
-            respuesta1: "París",
-            respuesta2: "Londres",
-            respuesta3: "Madrid",
-            respuesta4: "Berlín"
+            respuesta1: "Charmander",
+            respuesta2: "Squirtle",
+            respuesta3: "Bulbasaur",
+            respuesta4: "Pikachu"
         },
         correcta: 1
     },
     {
         id: 2,
-        pregunta: "¿Quién escribió 'El Quijote'?",
+        pregunta: "¿Qué tipo de Pokémon es Pikachu?",
         respuestas: {
-            respuesta1: "William Shakespeare",
-            respuesta2: "Miguel de Cervantes",
-            respuesta3: "Federico García Lorca",
-            respuesta4: "Jorge Luis Borges"
+            respuesta1: "Eléctrico",
+            respuesta2: "Fuego",
+            respuesta3: "Agua",
+            respuesta4: "Planta"
+        },
+        correcta: 1
+    },
+    {
+        id: 3,
+        pregunta: "¿Cuál es el Pokémon legendario de tipo dragón en la región de Sinnoh?",
+        respuestas: {
+            respuesta1: "Rayquaza",
+            respuesta2: "Dialga",
+            respuesta3: "Palkia",
+            respuesta4: "Giratina"
         },
         correcta: 2
     },
     {
-        id: 3,
-        pregunta: "¿Cuál es el río más largo del mundo?",
+        id: 4,
+        pregunta: "¿Cuál es el Pokémon inicial de tipo planta en la región de Johto?",
         respuestas: {
-            respuesta1: "Yangtsé",
-            respuesta2: "Nilo",
-            respuesta3: "Misisipi",
-            respuesta4: "Amazonas"
+            respuesta1: "Chikorita",
+            respuesta2: "Cyndaquil",
+            respuesta3: "Totodile",
+            respuesta4: "Pichu"
         },
-        correcta: 4
-    }
+        correcta: 1
+    },
+    {
+        id: 5,
+        pregunta: "¿Cuál es el Pokémon legendario que representa el equilibrio del tiempo en la región de Sinnoh?",
+        respuestas: {
+            respuesta1: "Rayquaza",
+            respuesta2: "Dialga",
+            respuesta3: "Palkia",
+            respuesta4: "Giratina"
+        },
+        correcta: 2
+    },
+    {
+        id: 6,
+        pregunta: "¿Cuál es el Pokémon inicial de tipo agua en la región de Kalos?",
+        respuestas: {
+            respuesta1: "Froakie",
+            respuesta2: "Chespin",
+            respuesta3: "Fennekin",
+            respuesta4: "Pikachu"
+        },
+        correcta: 1
+    },
+    {
+        id: 7,
+        pregunta: "¿Cuál es el Pokémon que evoluciona en Blastoise?",
+        respuestas: {
+            respuesta1: "Charmander",
+            respuesta2: "Squirtle",
+            respuesta3: "Bulbasaur",
+            respuesta4: "Pikachu"
+        },
+        correcta: 2
+    },
+    // Añade más preguntas aquí...
 ];
 
 let cantidadPreguntas = preguntas.length 
@@ -51,6 +96,9 @@ const posible4 = document.getElementById("opcion-4")
 const posiblesArray = [posible1,posible2,posible3,posible4]
 
 function setQuiz(idNumber) {
+
+    
+
     const lugarPregunta = document.getElementById("pregunta")
     
 
@@ -91,13 +139,19 @@ console.log("indicies despues",indexPreguntas);
 cantidadPreguntas--
 console.log("setQuizer",setQuizer);
 
+
+let Correctas = 0
+let Racha = 0
 function responder(respuesta) {
     console.log("holaaaa");
     respuesta.classList += " incorrect-quiz "
     if (respuesta.classList.contains("correct")) {
         respuesta.classList = "correct-quiz"
+        Correctas++
 
-        console.log("cantidad",cantidadPreguntas);
+
+
+        
 
         let numeroAleatorio = Math.floor(Math.random() * cantidadPreguntas );
 
@@ -105,18 +159,46 @@ function responder(respuesta) {
         console.log("numeroAle",numeroAleatorio);
         const cososta = indexPreguntas[numeroAleatorio]
         console.log(indexPreguntas,cososta );
+
+
+        if (cantidadPreguntas === 0) {
+            setTimeout(() => {
+                if (Correctas > Racha) {
+                    Racha = Correctas
+                }
+                const contenedorRespustas = document.querySelector('.contenedor-respuestas')
+                while (contenedorRespustas.firstChild) {
+                    contenedorRespustas.removeChild(contenedorRespustas.firstChild);
+                }
+                const lugarPregunta = document.getElementById("pregunta")
+                lugarPregunta.innerHTML='Fin'
+                contenedorRespustas.innerHTML = `Racha = ${Racha}`
+                contenedorRespustas.style['grid-template-columns'] = '1fr';
+            },1000);
+            
+            
+        }else{
+            setTimeout(() => {setQuiz(cososta)}, 1000);
+
+            cantidadPreguntas--
+
+            console.log("indicies antes",indexPreguntas);
+
+            indexPreguntas.splice(numeroAleatorio,1)
+
+            console.log("indicies despues",indexPreguntas);
+        }
         
-        setTimeout(() => {setQuiz(cososta)}, 1000);
-
-        cantidadPreguntas--
-
-        console.log("indicies antes",indexPreguntas);
-
-        indexPreguntas.splice(numeroAleatorio,1)
-
-        console.log("indicies despues",indexPreguntas);
+        
+    }else{
+        if (Correctas > Racha) {
+            Racha = Correctas
+        }
+        Correctas = 0
     }
     console.log("boton");
+
+
     
 }
 
